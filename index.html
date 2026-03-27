@@ -130,17 +130,87 @@
 
 </body>
 </html>
-<details style="margin-top:50px; font-size:12px; color:#555;">
-  <summary style="cursor:pointer; font-weight:bold;">
-    📄 免责声明（点击展开）
-  </summary>
+<footer class="site-footer">
+    <div class="footer-content">
+        <h2 class="disclaimer-title">免责声明 / Disclaimer</h2>
+        
+        <div class="disclaimer-text">
+            <p>1. 本服务所展示的相关信息均来源于用户提交或公开渠道整理，仅供参考，不代表本网站立场。</p>
+            <p>2. 本网站不对信息的真实性、准确性、完整性或及时性作任何明示或暗示的保证，亦不承担因使用本服务所产生的任何责任。</p>
+            <p>3. 用户在使用本服务时，应自行判断相关信息的真实性与风险，任何因依赖本服务信息而产生的后果，均由用户自行承担。</p>
+            <p>4. 如任何单位或个人认为本网站内容涉嫌侵犯其合法权益（包括但不限于名誉权、隐私权等），请及时与本网站联系并提供相关证明材料，本网站将在核实后依法处理。</p>
+            <p>5. 本网站有权对用户提交的信息进行审核、修改或删除，并保留追究恶意发布、传播不实信息等行为法律责任的权利。</p>
+            <p>6. 本服务仅用于防范诈骗风险提示，不构成对任何个人或账号的事实认定或结论。</p>
+        </div>
 
-  <div style="margin-top:10px; line-height:1.6;">
-    本网站所展示的所有信息均由用户提交，仅供参考，不代表本站立场。<br>
-    本站不保证信息的真实性、完整性或时效性，请用户自行判断风险。<br>
-    如有侵权、误报等情况，请联系站长处理。<br>
-    严禁发布虚假信息或恶意诽谤他人。
-  </div>
-</details>
+        <div class="footer-bottom">
+            <span>© 2026 风险查询系统. All Rights Reserved.</span>
+            <span class="contact-link">投诉建议: support@yourdomain.com</span>
+        </div>
+    </div>
+</footer>
+
+<style>
+/* 页脚整体背景 */
+.site-footer {
+    background-color: #fcfcfc; /* 极浅灰，区分主体内容 */
+    border-top: 1px solid #eeeeee;
+    padding: 40px 20px;
+    margin-top: 50px;
+    font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+}
+
+.footer-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* 标题样式：低调但不失严肃 */
+.disclaimer-title {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+/* 正文样式：稍微调淡颜色，缩小字号 */
+.disclaimer-text {
+    font-size: 13px;
+    line-height: 1.8;
+    color: #888; /* 灰色文字，显得专业且不抢眼 */
+    text-align: justify; /* 两端对齐，排版更整齐 */
+}
+
+.disclaimer-text p {
+    margin-bottom: 8px;
+}
+
+/* 底部标注 */
+.footer-bottom {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #bbb;
+}
+
+.contact-link {
+    cursor: pointer;
+}
+
+/* 响应式：手机端自动调整 */
+@media (max-width: 600px) {
+    .footer-bottom {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}
+</style>
+
 
 
