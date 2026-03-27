@@ -130,26 +130,35 @@
 
 </body>
 </html>
-function checkScammer() {
-    const val = document.getElementById('qqInput').value.trim();
-    const resultArea = document.getElementById('resultArea'); // 你的结果框
-    const reportSection = document.getElementById('reportSection'); // 你的举报框
-    const targetInput = document.getElementById('target_qq'); // 举报框里的QQ位
+<script>
+    // 1. 初始化（这一行必须在最前面）
+    (function() {
+        emailjs.init("你的_Public_Key"); 
+    })();
 
-    // 假设你现有的判断逻辑...
-    const isFound = scamList.find(item => item.qq === val);
-
-    if (isFound) {
-        // 搜到了：显示结果，隐藏举报框
-        resultArea.style.display = "block";
-        reportSection.style.display = "none";
-    } else {
-        // 没搜到：隐藏结果，【显示举报框】
-        resultArea.style.display = "none";
-        reportSection.style.display = "block";
+    // 2. 处理举报提交
+    document.getElementById('reportForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // 阻止网页刷新
         
-        // 自动把刚才搜的号填进举报框，省得用户再打一遍
-        if(targetInput) targetInput.value = val;
-    }
-}
+        const btn = document.getElementById('submitBtn');
+        btn.innerText = "发送中...";
+        btn.disabled = true;
+
+        // 3. 发送邮件
+        emailjs.sendForm('你的_Service_ID', '你的_Template_ID', this)
+            .then(function() {
+                alert("✅ 举报成功！已发送至站长 Gmail");
+                document.getElementById('reportForm').reset();
+                document.getElementById('reportSection').style.display = "none"; // 提交后隐藏
+                btn.innerText = "提交举报";
+                btn.disabled = false;
+            }, function(error) {
+                alert("❌ 发送失败，请检查 Service ID 或 Public Key");
+                console.log('FAILED...', error);
+                btn.innerText = "重试提交";
+                btn.disabled = false;
+            });
+    });
+</script>
+
 
