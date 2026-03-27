@@ -130,35 +130,5 @@
 
 </body>
 </html>
-<script>
-    // 1. 初始化（这一行必须在最前面）
-    (function() {
-        emailjs.init("你的_Public_Key"); 
-    })();
-
-    // 2. 处理举报提交
-    document.getElementById('reportForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // 阻止网页刷新
-        
-        const btn = document.getElementById('submitBtn');
-        btn.innerText = "发送中...";
-        btn.disabled = true;
-
-        // 3. 发送邮件
-        emailjs.sendForm('你的_Service_ID', '你的_Template_ID', this)
-            .then(function() {
-                alert("✅ 举报成功！已发送至站长 Gmail");
-                document.getElementById('reportForm').reset();
-                document.getElementById('reportSection').style.display = "none"; // 提交后隐藏
-                btn.innerText = "提交举报";
-                btn.disabled = false;
-            }, function(error) {
-                alert("❌ 发送失败，请检查 Service ID 或 Public Key");
-                console.log('FAILED...', error);
-                btn.innerText = "重试提交";
-                btn.disabled = false;
-            });
-    });
-</script>
 
 
