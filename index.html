@@ -115,7 +115,7 @@
 
         if (!val) return;
 
-        const record = scamList.find(item => item.qq === val);
+        const record = scamList.find(item => item.qq === val.toString());
 
         if (record) {
             emptyMsg.style.display = "none";
