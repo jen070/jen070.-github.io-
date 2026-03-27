@@ -28,20 +28,20 @@
 <body>
 
 <div class="card">
-    <h2>交易护航系统</h2>
-    <div class="version">数据版本：1.0 (2025/2/15)</div>
+    <h2>谨慎交易查询</h2>
+    <div class="version">数据版本：1.0 (2026/3/27)</div>
 
     <div class="search-box">
-        <input type="number" id="qqInput" placeholder="输入涉诈 QQ 号码进行核实...">
+        <input type="number" id="qqInput" placeholder="输入可疑 QQ 号码进行核实...">
         <button onclick="checkScammer()">立即核查</button>
     </div>
 
     <div id="resultArea">
-        <div class="warning-title">⚠️ 查获涉诈记录：</div>
+        <div class="warning-title">⚠️ 查获不良记录：</div>
         <div id="scamStory" class="story-box"></div>
     </div>
 
-    <div id="emptyMsg">✅ 暂未在数据库中查获该号码</div>
+    <div id="emptyMsg">✅ 暂无不良记录</div>
 
     <div class="disclaimer">
         免责声明：本系统仅供参考，数据不代表官方定论，有任何想举报的骗子请加QQ：2409595748
