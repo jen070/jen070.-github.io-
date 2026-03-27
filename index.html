@@ -157,10 +157,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    color: #999;
     background: #fff;
+    cursor: pointer;
+    z-index: 1000;
+    transition: 0.3s;
+}
+.info-trigger:hover {
+    color: #1677ff;
+    border-color: #1677ff;
 }
 
+/* 遮罩 */
 .modal-mask {
     position: fixed;
     top:0;left:0;
@@ -169,26 +179,56 @@
     display: none;
     justify-content:center;
     align-items:center;
+    z-index: 999;
 }
 
+/* 弹窗 */
 .modal-content {
-    background:white;
-    padding:20px;
-    border-radius:10px;
+    background: white;
+    padding: 20px;
+    width: 320px;
+    border-radius: 10px;
+}
+
+/* 内容 */
+.modal-body {
+    max-height: 300px;
+    overflow-y: auto;
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+/* 按钮 */
+.close-btn {
+    margin-top: 15px;
+    width: 100%;
+    padding: 8px;
+    background: #1677ff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
 }
 </style>
 
-
-<!-- HTML -->
+<!-- 按钮 -->
 <div class="info-trigger" onclick="openModal()">!</div>
 
+<!-- 弹窗 -->
 <div id="modalMask" class="modal-mask">
     <div class="modal-content">
-        <p>免责声明内容</p>
-        <button onclick="closeModal()">关闭</button>
+        <h3>免责声明</h3>
+        <div class="modal-body">
+            <p>1. 本服务所展示的相关信息均来源于用户提交或公开渠道整理，仅供参考，不代表本网站立场。</p>
+            <p>2. 本网站不对信息的真实性、准确性、完整性或及时性作任何明示或暗示的保证，亦不承担因使用本服务所产生的任何责任。</p>
+            <p>3. 用户在使用本服务时，应自行判断相关信息的真实性与风险，任何因依赖本服务信息而产生的后果，均由用户自行承担。</p>
+            <p>4. 如任何单位或个人认为本网站内容涉嫌侵犯其合法权益（包括但不限于名誉权、隐私权等），请及时与本网站联系并提供相关证明材料，本网站将在核实后依法处理。</p>
+            <p>5. 本网站有权对用户提交的信息进行审核、修改或删除，并保留追究恶意发布、传播不实信息等行为法律责任的权利。</p>
+            <p>6. 本服务仅用于防范诈骗风险提示，不构成对任何个人或账号的事实认定或结论。</p>
+        </div>
+        <button class="close-btn" onclick="closeModal()">我已阅读</button>
     </div>
 </div>
-
 
 <script>
 function openModal() {
@@ -206,8 +246,7 @@ document.getElementById('modalMask').addEventListener("click", function(e) {
 });
 </script>
 
-</body>
-</html>
+<!-- ===== 免责声明模块结束 ===== -->
 
 
 
