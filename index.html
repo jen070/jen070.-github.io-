@@ -129,10 +129,271 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QQ 安全查询系统</title>
+    <style>
+        /* 基础页面样式 */
+        body { background-color: #f0f2f5; font-family: "PingFang SC", "Microsoft YaHei", sans-serif; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin: 0; padding-top: 100px; }
+        
+        /* 右上角感叹号图标 */
+        .info-trigger {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 28px;
+            height: 28px;
+            border: 2px solid #8c8c8c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #8c8c8c;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            z-index: 100;
+            background: white;
+        }
+        .info-trigger:hover { border-color: #1677ff; color: #1677ff; transform: scale(1.1); }
 
+        /* 弹窗背景遮罩 */
+        .modal-mask {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            display: none; /* 默认隐藏 */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(2px);
+        }
 
+        /* 正中间的免责声明框 */
+        .modal-content {
+            background: #fff;
+            width: 90%;
+            max-width: 450px;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+            position: relative;
+            animation: slideIn 0.3s ease-out;
+        }
+        .modal-content h3 { margin-top: 0; color: #1f1f1f; text-align: center; font-size: 20px; border-bottom: 1px solid #f0f0f0; padding-bottom: 15px; }
+        .modal-body { 
+            color: #595959; 
+            font-size: 14px; 
+            line-height: 1.8; 
+            max-height: 400px; 
+            overflow-y: auto;
+            text-align: justify;
+        }
+        .modal-body p { margin: 8px 0; }
+        
+        .footer-action { text-align: center; margin-top: 20px; }
+        .close-btn {
+            padding: 8px 32px;
+            background: #1677ff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        .close-btn:hover { background: #4096ff; }
 
+        /* 查询主卡片 */
+        .search-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); width: 360px; }
+        .search-card h2 { text-align: center; margin-top: 0; color: #262626; font-size: 22px; }
+        .input-wrap { display: flex; gap: 8px; margin-top: 20px; }
+        input { flex: 1; padding: 10px 12px; border: 1px solid #d9d9d9; border-radius: 4px; outline: none; transition: all 0.3s; }
+        input:focus { border-color: #1677ff; box-shadow: 0 0 0 2px rgba(22,119,255,0.1); }
+        .btn-query { background: #1677ff; color: white; border: none; border-radius: 4px; padding: 0 16px; cursor: pointer; }
 
+        @keyframes slideIn { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
 
+    <!-- 右上角感叹号 -->
+    <div class="info-trigger" onclick="openModal()">!</div>
 
+    <!-- 免责声明弹窗 -->
+    <div id="modalMask" class="modal-mask">
+        <div class="modal-content">
+            <h3>免责声明</h3>
+            <div class="modal-body">
+                <p>1. 本服务所展示的相关信息均来源于用户提交或公开渠道整理，仅供参考，不代表本网站立场。</p>
+                <p>2. 本网站不对信息的真实性、准确性、完整性或及时性作任何明示或暗示的保证，亦不承担因使用本服务所产生的任何责任。</p>
+                <p>3. 用户在使用本服务时，应自行判断相关信息的真实性与风险，任何因依赖本服务信息而产生的后果，均由用户自行承担。</p>
+                <p>4. 如任何单位或个人认为本网站内容涉嫌侵犯其合法权益（包括但不限于名誉权、隐私权等），请及时与本网站联系并提供相关证明材料，本网站将在核实后依法处理。</p>
+                <p>5. 本网站有权对用户提交的信息进行审核、修改或删除，并保留追究恶意发布、传播不实信息等行为法律责任的权利。</p>
+                <p>6. 本服务仅用于防范诈骗风险提示，不构成对任何个人或账号的事实认定或结论。</p>
+            </div>
+            <div class="footer-action">
+                <button class="close-btn" onclick="closeModal()">我已阅读并同意</button>
+            </div>
+        </div>
+    </div>
 
+    <!-- 主查询界面 -->
+    <div class="search-card">
+        <h2>安全中心查询</h2>
+        <div class="input-wrap">
+            <input type="text" id="qqInput" placeholder="请输入待查询 QQ 号码">
+            <button class="btn-query" onclick="alert('系统正在维护中，请稍后再试')">查询</button>
+        </div>
+    </div>
+
+    <script>
+        const mask = document.getElementById('modalMask');
+        
+        function openModal() { mask.style.display = 'flex'; }
+        function closeModal() { mask.style.display = 'none'; }
+
+        // 点击背景关闭
+        window.onclick = function(e) { if (e.target == mask) closeModal(); }
+    </script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QQ 安全查询系统</title>
+    <style>
+        /* 基础页面样式 */
+        body { background-color: #f0f2f5; font-family: "PingFang SC", "Microsoft YaHei", sans-serif; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin: 0; padding-top: 100px; }
+        
+        /* 右上角感叹号图标 */
+        .info-trigger {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 28px;
+            height: 28px;
+            border: 2px solid #8c8c8c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #8c8c8c;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            z-index: 100;
+            background: white;
+        }
+        .info-trigger:hover { border-color: #1677ff; color: #1677ff; transform: scale(1.1); }
+
+        /* 弹窗背景遮罩 */
+        .modal-mask {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            display: none; /* 默认隐藏 */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 正中间的免责声明框 */
+        .modal-content {
+            background: #fff;
+            width: 90%;
+            max-width: 450px;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+            position: relative;
+            animation: slideIn 0.3s ease-out;
+        }
+        .modal-content h3 { margin-top: 0; color: #1f1f1f; text-align: center; font-size: 20px; border-bottom: 1px solid #f0f0f0; padding-bottom: 15px; }
+        .modal-body { 
+            color: #595959; 
+            font-size: 14px; 
+            line-height: 1.8; 
+            max-height: 400px; 
+            overflow-y: auto;
+            text-align: justify;
+        }
+        .modal-body p { margin: 8px 0; }
+        
+        .footer-action { text-align: center; margin-top: 20px; }
+        .close-btn {
+            padding: 8px 32px;
+            background: #1677ff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        .close-btn:hover { background: #4096ff; }
+
+        /* 查询主卡片 */
+        .search-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); width: 360px; }
+        .search-card h2 { text-align: center; margin-top: 0; color: #262626; font-size: 22px; }
+        .input-wrap { display: flex; gap: 8px; margin-top: 20px; }
+        input { flex: 1; padding: 10px 12px; border: 1px solid #d9d9d9; border-radius: 4px; outline: none; transition: all 0.3s; }
+        input:focus { border-color: #1677ff; box-shadow: 0 0 0 2px rgba(22,119,255,0.1); }
+        .btn-query { background: #1677ff; color: white; border: none; border-radius: 4px; padding: 0 16px; cursor: pointer; }
+
+        @keyframes slideIn { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <!-- 右上角感叹号 -->
+    <div class="info-trigger" onclick="openModal()">!</div>
+
+    <!-- 免责声明弹窗 -->
+    <div id="modalMask" class="modal-mask">
+        <div class="modal-content">
+            <h3>免责声明</h3>
+            <div class="modal-body">
+                <p>1. 本服务所展示的相关信息均来源于用户提交或公开渠道整理，仅供参考，不代表本网站立场。</p>
+                <p>2. 本网站不对信息的真实性、准确性、完整性或及时性作任何明示或暗示的保证，亦不承担因使用本服务所产生的任何责任。</p>
+                <p>3. 用户在使用本服务时，应自行判断相关信息的真实性与风险，任何因依赖本服务信息而产生的后果，均由用户自行承担。</p>
+                <p>4. 如任何单位或个人认为本网站内容涉嫌侵犯其合法权益（包括但不限于名誉权、隐私权等），请及时与本网站联系并提供相关证明材料，本网站将在核实后依法处理。</p>
+                <p>5. 本网站有权对用户提交的信息进行审核、修改或删除，并保留追究恶意发布、传播不实信息等行为法律责任的权利。</p>
+                <p>6. 本服务仅用于防范诈骗风险提示，不构成对任何个人或账号的事实认定或结论。</p>
+            </div>
+            <div class="footer-action">
+                <button class="close-btn" onclick="closeModal()">我已阅读并同意</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主查询界面 -->
+    <div class="search-card">
+        <h2>安全中心查询</h2>
+        <div class="input-wrap">
+            <input type="text" id="qqInput" placeholder="请输入待查询 QQ 号码">
+            <button class="btn-query" onclick="alert('系统正在维护中，请稍后再试')">查询</button>
+        </div>
+    </div>
+
+    <script>
+        const mask = document.getElementById('modalMask');
+        
+        function openModal() { mask.style.display = 'flex'; }
+        function closeModal() { mask.style.display = 'none'; }
+
+        // 点击背景关闭
+        window.onclick = function(e) { if (e.target == mask) closeModal(); }
+    </script>
+
+</body>
+</html>
