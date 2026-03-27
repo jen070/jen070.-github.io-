@@ -3,63 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的第一个网站 - QQ查询</title>
+    <title>骗子合集安全查询系统</title>
     <style>
-        /* 这里是让网页变好看的代码 */
-        body { font-family: sans-serif; text-align: center; padding-top: 50px; background-color: #f5f5f5; }
-        .box { background: white; padding: 20px; border-radius: 15px; display: inline-block; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 80%; max-width: 400px; }
-        input { width: 90%; padding: 12px; margin: 10px 0; border: 2px solid #007bff; border-radius: 8px; outline: none; font-size: 16px; }
-        button { width: 95%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; }
-        #result { margin-top: 20px; font-size: 18px; font-weight: bold; }
-        .success { color: #28a745; }
-        .error { color: #dc3545; }
+        body { font-family: -apple-system, sans-serif; background: #fdf2f2; display: flex; justify-content: center; padding: 20px; }
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 450px; }
+        h2 { color: #d93025; text-align: center; margin-bottom: 5px; }
+        .version { text-align: center; font-size: 12px; color: #999; margin-bottom: 20px; }
+        
+        .search-box { position: relative; margin-bottom: 20px; }
+        input { width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 10px; font-size: 16px; box-sizing: border-box; outline: none; transition: 0.3s; }
+        input:focus { border-color: #d93025; }
+        
+        button { width: 100%; background: #d93025; color: white; border: none; padding: 15px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        button:active { background: #b2261e; }
+
+        #resultArea { display: none; margin-top: 25px; border-top: 2px dashed #ffcccc; padding-top: 20px; text-align: left; }
+        .warning-title { color: #d93025; font-weight: bold; font-size: 18px; margin-bottom: 10px; }
+        .story-box { background: #fff8f8; border: 1px solid #ffcccc; padding: 15px; border-radius: 8px; color: #444; line-height: 1.6; font-size: 15px; }
+        #emptyMsg { display: none; color: #28a745; text-align: center; margin-top: 20px; font-weight: bold; }
+        
+        .disclaimer { margin-top: 30px; font-size: 11px; color: #999; line-height: 1.4; text-align: justify; }
     </style>
 </head>
 <body>
 
-    <div class="box">
-        <h3>欢迎来到我的网站</h3>
-        <p>请输入 企鹅 号进行查询</p>
-        
-        <!-- 搜索框 -->
-        <input type="number" id="qqInput" placeholder="在此输入完整 QQ 号">
-        <button onclick="checkData()">立即查询</button>
+<div class="card">
+    <h2>诈骗名单查询系统</h2>
+    <div class="version">数据版本：1.0 (2025/2/15)</div>
 
-        <!-- 显示结果的地方 -->
-        <div id="result"></div>
+    <div class="search-box">
+        <input type="number" id="qqInput" placeholder="输入涉诈 QQ 号码进行核实...">
+        <button onclick="checkScammer()">立即核查</button>
     </div>
 
-    <script>
-        // 【重要】在这里填入你那几百个 QQ 号
-        // 注意：每个号都要用英文双引号包裹，并用逗号隔开
-        const qqDatabase = [
-            "123456789",
-            "987654321",
-            "111222333",
-            "66668888"
-            // 你可以在这里继续粘贴几百个...
-        ];
+    <div id="resultArea">
+        <div class="warning-title">⚠️ 查获涉诈记录：</div>
+        <div id="scamStory" class="story-box"></div>
+    </div>
 
-        function checkData() {
-            const input = document.getElementById('qqInput').value.trim();
-            const resultDiv = document.getElementById('result');
+    <div id="emptyMsg">✅ 暂未在数据库中查获该号码</div>
 
-            if (input === "") {
-                resultDiv.innerHTML = "请输入企鹅号";
-                resultDiv.className = "";
-                return;
-            }
+    <div class="disclaimer">
+        免责声明：数据来自“骗子合集表”，本系统仅供参考。请用户核对号码时从小到大位位对应查找。数据不代表官方定论，请自行甄别。
+    </div>
+</div>
 
-            // 精准匹配逻辑
-            if (qqDatabase.includes(input)) {
-                resultDiv.innerHTML = "✅ 此人已被举报过";
-                resultDiv.className = "success";
-            } else {
-                resultDiv.innerHTML = "❌ 此人未被举报";
-                resultDiv.className = "error";
-            }
+<script>
+    // 这是根据你提供的图片整理的部分数据库
+    const scamList = [
+        { qq: "1028846991", story: "案例记录：跑路" },
+        { qq: "1169924475", story: "案例记录：闲鱼卖小部（目前三个QQ）微信reverse1999999，骗20，手机号18250721842" },
+        { qq: "1209074558", story: "案例记录：闲鱼骗子" },
+        { qq: "1330622484", story: "案例记录：跑路" },
+        { qq: "1337528652", story: "案例记录：骗皮坑" },
+        { qq: "1359157897", story: "案例记录：跑路" },
+        { qq: "1414105157", story: "案例记录：闲鱼骗子" },
+        { qq: "1439820633", story: "案例记录：跑路倒卖虚拟币" },
+        { qq: "1491960597", story: "案例记录：骗子" },
+        { qq: "15609579182", story: "案例记录：骗子" },
+        { qq: "1589410880", story: "案例记录：骗子毁号" },
+        { qq: "1620966581", story: "案例记录：骗子" },
+        { qq: "1795296837", story: "案例记录：骗一个皇家" },
+        { qq: "18209584484", story: "案例记录：骗子" },
+        { qq: "1831990185", story: "案例记录：骗了2000" },
+        { qq: "1935331873", story: "案例记录：跑路" }
+        // ... 其他几百个数据可以按此格式继续添加
+    ];
+
+    function checkScammer() {
+        const val = document.getElementById('qqInput').value.trim();
+        const resArea = document.getElementById('resultArea');
+        const storyDiv = document.getElementById('scamStory');
+        const emptyMsg = document.getElementById('emptyMsg');
+
+        if (!val) return;
+
+        const record = scamList.find(item => item.qq === val);
+
+        if (record) {
+            emptyMsg.style.display = "none";
+            resArea.style.display = "block";
+            storyDiv.innerText = record.story;
+        } else {
+            resArea.style.display = "none";
+            emptyMsg.style.display = "block";
         }
-    </script>
+    }
+</script>
 
 </body>
 </html>
