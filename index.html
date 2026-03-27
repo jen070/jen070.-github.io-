@@ -130,5 +130,84 @@
 </body>
 </html>
 
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>测试</title>
+</head>
+
+<body>
+
+<!-- 你原来的查询系统 -->
+<div>这里是你的查询系统</div>
+
+
+<!-- 👇👇👇 全部写在底下（可以这样干） -->
+
+<style>
+.info-trigger {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 32px;
+    height: 32px;
+    border: 2px solid #999;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: #fff;
+}
+
+.modal-mask {
+    position: fixed;
+    top:0;left:0;
+    width:100%;height:100%;
+    background: rgba(0,0,0,0.4);
+    display: none;
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-content {
+    background:white;
+    padding:20px;
+    border-radius:10px;
+}
+</style>
+
+
+<!-- HTML -->
+<div class="info-trigger" onclick="openModal()">!</div>
+
+<div id="modalMask" class="modal-mask">
+    <div class="modal-content">
+        <p>免责声明内容</p>
+        <button onclick="closeModal()">关闭</button>
+    </div>
+</div>
+
+
+<script>
+function openModal() {
+    document.getElementById('modalMask').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('modalMask').style.display = 'none';
+}
+
+document.getElementById('modalMask').addEventListener("click", function(e) {
+    if (e.target === this) {
+        closeModal();
+    }
+});
+</script>
+
+</body>
+</html>
+
 
 
