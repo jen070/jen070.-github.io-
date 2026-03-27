@@ -19,7 +19,7 @@
 
     <div class="box">
         <h3>欢迎来到我的网站</h3>
-        <p>请输入 QQ 号进行查询</p>
+        <p>请输入 企鹅 号进行查询</p>
         
         <!-- 搜索框 -->
         <input type="number" id="qqInput" placeholder="在此输入完整 QQ 号">
@@ -45,17 +45,17 @@
             const resultDiv = document.getElementById('result');
 
             if (input === "") {
-                resultDiv.innerHTML = "请输入号码";
+                resultDiv.innerHTML = "请输入企鹅号";
                 resultDiv.className = "";
                 return;
             }
 
             // 精准匹配逻辑
             if (qqDatabase.includes(input)) {
-                resultDiv.innerHTML = "✅ 该号码已在库中";
+                resultDiv.innerHTML = "✅ 此人已被举报过";
                 resultDiv.className = "success";
             } else {
-                resultDiv.innerHTML = "❌ 该号码不在系统中";
+                resultDiv.innerHTML = "❌ 此人未被举报";
                 resultDiv.className = "error";
             }
         }
