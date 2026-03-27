@@ -242,25 +242,4 @@
         </div>
     </div>
 
-    <!-- 主查询界面 -->
-    <div class="search-card">
-        <h2>安全中心查询</h2>
-        <div class="input-wrap">
-            <input type="text" id="qqInput" placeholder="请输入待查询 QQ 号码">
-            <button class="btn-query" onclick="alert('系统正在维护中，请稍后再试')">查询</button>
-        </div>
-    </div>
-
-    <script>
-        const mask = document.getElementById('modalMask');
-        
-        function openModal() { mask.style.display = 'flex'; }
-        function closeModal() { mask.style.display = 'none'; }
-
-        // 点击背景关闭
-        window.onclick = function(e) { if (e.target == mask) closeModal(); }
-    </script>
-
-</body>
-</html>
 
