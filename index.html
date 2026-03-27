@@ -1,13 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的第一个网站</title>
+    <title>我的第一个网站 - QQ查询</title>
+    <style>
+        /* 这里是让网页变好看的代码 */
+        body { font-family: sans-serif; text-align: center; padding-top: 50px; background-color: #f5f5f5; }
+        .box { background: white; padding: 20px; border-radius: 15px; display: inline-block; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 80%; max-width: 400px; }
+        input { width: 90%; padding: 12px; margin: 10px 0; border: 2px solid #007bff; border-radius: 8px; outline: none; font-size: 16px; }
+        button { width: 95%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; }
+        #result { margin-top: 20px; font-size: 18px; font-weight: bold; }
+        .success { color: #28a745; }
+        .error { color: #dc3545; }
+    </style>
 </head>
 <body>
-    </h3>欢迎来到我的网站</h3>
+
+    <div class="box">
+        <h3>欢迎来到我的网站</h3>
+        <p>请输入 QQ 号进行查询</p>
+        
+        <!-- 搜索框 -->
+        <input type="number" id="qqInput" placeholder="在此输入完整 QQ 号">
+        <button onclick="checkData()">立即查询</button>
+
+        <!-- 显示结果的地方 -->
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // 【重要】在这里填入你那几百个 QQ 号
+        // 注意：每个号都要用英文双引号包裹，并用逗号隔开
+        const qqDatabase = [
+            "123456789",
+            "987654321",
+            "111222333",
+            "66668888"
+            // 你可以在这里继续粘贴几百个...
+        ];
+
+        function checkData() {
+            const input = document.getElementById('qqInput').value.trim();
+            const resultDiv = document.getElementById('result');
+
+            if (input === "") {
+                resultDiv.innerHTML = "请输入号码";
+                resultDiv.className = "";
+                return;
+            }
+
+            // 精准匹配逻辑
+            if (qqDatabase.includes(input)) {
+                resultDiv.innerHTML = "✅ 该号码已在库中";
+                resultDiv.className = "success";
+            } else {
+                resultDiv.innerHTML = "❌ 该号码不在系统中";
+                resultDiv.className = "error";
+            }
+        }
+    </script>
 
 </body>
 </html>
