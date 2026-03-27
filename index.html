@@ -130,3 +130,27 @@
 
 </body>
 </html>
+
+function checkScammer() {
+    const val = document.getElementById('qqInput').value.trim();
+    const resultArea = document.getElementById('resultArea'); // 你的结果框
+    const reportSection = document.getElementById('reportSection'); // 你的举报框
+    const targetInput = document.getElementById('target_qq'); // 举报框里的QQ位
+
+    // 假设你现有的判断逻辑...
+    const isFound = scamList.find(item => item.qq === val);
+
+    if (isFound) {
+        // 搜到了：显示结果，隐藏举报框
+        resultArea.style.display = "block";
+        reportSection.style.display = "none";
+    } else {
+        // 没搜到：隐藏结果，【显示举报框】
+        resultArea.style.display = "none";
+        reportSection.style.display = "block";
+        
+        // 自动把刚才搜的号填进举报框，省得用户再打一遍
+        if(targetInput) targetInput.value = val;
+    }
+}
+
